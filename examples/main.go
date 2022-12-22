@@ -1,7 +1,25 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+	"os"
+	"strings"
+)
 
 func main() {
-	fmt.Println("Hello, World!!")
+	args := os.Args[1:]
+
+	if result, err := Concat(args...); err != nil {
+		fmt.Printf("Error: %s\n", err)
+	} else {
+		fmt.Printf("Concatenated string: '%s'\n", result)
+	}
+}
+
+func Concat(parts ...string) (string, error) {
+	if len(parts) == 0 {
+		return "", errors.New("no strings supplied")
+	}
+	return strings.Join(parts, " "), nil
 }
